@@ -80,6 +80,22 @@ export class SpeechCardListComponent implements OnInit, OnDestroy {
       thai: 'แล้วอีกอันล่ะครับ?',
       eng: 'And how about the other?',
     },
+    {
+      thai: 'คุณว่าอย่างไหนดีกว่า?',
+      eng: 'Which would you suggest?',
+    },
+    {
+      thai: 'ใช่ ฉันรู้จักดีเลยล่ะ',
+      eng: 'Yes, I know very well',
+    },
+    {
+      thai: 'รอสักประเดี๋ยวนะ',
+      eng: 'wait for a while',
+    },
+    {
+      thai: 'ไม่ ผมไม่คิดอย่างนั้นนะ',
+      eng: "No, I don't think so",
+    },
   ];
 
   speechModelList: SpeechModel[] = [...this.originalSpeechModelList];
