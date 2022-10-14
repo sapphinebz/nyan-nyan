@@ -2,12 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpeechModel } from '../model';
 import { SpeechCardComponent } from '../speech-card/speech-card.component';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -16,6 +17,7 @@ import {
   share,
   shareReplay,
   startWith,
+  takeUntil,
   tap,
 } from 'rxjs/operators';
 
@@ -27,7 +29,8 @@ import {
   styleUrls: ['./speech-card-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpeechCardListComponent implements OnInit {
+export class SpeechCardListComponent implements OnInit, OnDestroy {
+  onDestroy$ = new AsyncSubject<void>();
   originalSpeechModelList: SpeechModel[] = [
     {
       thai: 'ฟังฉันทันไหม?',
@@ -69,6 +72,14 @@ export class SpeechCardListComponent implements OnInit {
       thai: 'คุณชอบกินอะไร',
       eng: 'What’s your favorite food?',
     },
+    {
+      thai: 'ฉันจะเอาอันนี้',
+      eng: 'I will take this one',
+    },
+    {
+      thai: 'แล้วอีกอันล่ะครับ?',
+      eng: 'And how about the other?',
+    },
   ];
 
   speechModelList: SpeechModel[] = [...this.originalSpeechModelList];
@@ -79,7 +90,6 @@ export class SpeechCardListComponent implements OnInit {
     tap(() => {
       this.selectedSpeechModel = this.randomSpeechModel();
       this.showNextSpeechSubject.next(false);
-
       this.cf.markForCheck();
     }),
     share()
@@ -100,7 +110,14 @@ export class SpeechCardListComponent implements OnInit {
 
   constructor(private cf: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
+  ngOnInit(): void {
+    this.onNextSpeech$.pipe(takeUntil(this.onDestroy$)).subscribe();
+  }
 
   nextSpeechModel() {
     this.onNextSpeechSubject.next();
