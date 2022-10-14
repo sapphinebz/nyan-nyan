@@ -1,0 +1,15 @@
+:host .game-play-back {
+  font-size: 1.2em;
+  cursor: pointer;
+  &:hover {
+    color: green;
+  }
+}
+
+:host app-speech-card-list {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,15 @@
+<div class="speech-card-list-container">
+  <app-speech-card
+    (onShowHit)="clickShowHint()"
+    (onCorrect)="userSpeechCorrect()"
+    [speechModel]="selectedSpeechModel"
+  ></app-speech-card>
+
+  <button
+    *ngIf="showNextSpeech$ | async"
+    (click)="nextSpeechModel()"
+    style="margin-top: 2em"
+  >
+    Next speech
+  </button>
+</div>

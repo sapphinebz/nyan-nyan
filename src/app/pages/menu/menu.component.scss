@@ -1,0 +1,27 @@
+:host .menu-option {
+  padding: 1.3rem;
+  font-size: 2em;
+  border: 1px solid grey;
+  border-radius: 9px;
+  width: fit-content;
+  background-color: black;
+  color: #ffffff;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    color: yellow;
+  }
+}
+
+:host .menu-container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+:host {
+  margin-top: 15%;
+}
